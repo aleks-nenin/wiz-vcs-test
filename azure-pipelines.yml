@@ -17,3 +17,23 @@ steps:
     echo Add other tasks to build, test, and deploy your project.
     echo See https://aka.ms/yaml
   displayName: 'Run a multi-line script'
+  condition: 
+    
+- task: wiz@0
+  inputs:
+    command: 'iac'
+    clientid: $(WIZ_CLIENT_ID)
+    secret: $(WIZ_CLIENT_SECRET)
+    succeedOnFailures: false
+    policyHitsOnly: false
+    scanTags: "cicd=ado,app=terraform"
+    path: '.'
+    name: 'Terraform Code'
+    scanSecrets: true
+    parameterFiles: variables.tfvar,variables2.tfvar
+- task: wiz@0
+  inputs:
+    command: 'image'
+    clientid: 'wgxq75hrlndpbktx3eupevf2xyblttdv52bvqc46txlepp7yv7hxg'
+    secret: 'QnLhO6kIwZSlhXeyLnex8AG6QQ7Ai6oC7EkAptM968IBhutUBwCUqAMYABqdONq1'
+    policyHitsOnly: true
